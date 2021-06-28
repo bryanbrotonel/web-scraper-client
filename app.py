@@ -12,8 +12,11 @@ def index():
 @app.route("/ebay")
 def ebay():
 
+  arg = 'search'
+  argValue = 'Nintendo Switch Console'
+
   request = requests.get(
-      'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=True').json()
+      'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=True&crawl_args=%7B%22' + arg + '%22%3A%20' + argValue + '%7D').json()
   df = pd.DataFrame(request['items'])
 
   return render_template('table.html',  tables=[df.to_html(index=False)], titles=df.columns.values)
