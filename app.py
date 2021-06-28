@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
   response = requests.get(
-      'http://localhost:9080/crawl.json?spider_name=quotes&url=http://quotes.toscrape.com/').json()['items']
+      'http://localhost:16210/crawl.json?spider_name=quotes&url=http://quotes.toscrape.com/').json()['items']
   df = pd.DataFrame(data=response)
 
   return render_template('table.html',  tables=[df.to_html(index=False)], titles=df.columns.values)
