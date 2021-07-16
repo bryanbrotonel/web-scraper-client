@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <title>{% block title %}{% endblock %} Scraped Data</title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <h1>Search for Data</h1>
+    <div>
+      <form method="post">
+        <input type="search" name="search"/>
+        <input type="submit" value="Search" />
+      </form>
+    </div>
+  </body>
+</html>
