@@ -23,23 +23,16 @@ def results():
 
     dfCraigslist = scarpe_craigslist(searchArgs)
     dfAmazon = scrape_amazon(searchArgs)
+    dfEbay = scrape_ebay(searchArgs)
 
-    df = dfCraigslist.append(dfAmazon)
+    df = dfCraigslist.append(dfAmazon).append(dfEbay)
 
     return render_template('table.html',  tables=[df.to_html(index=False)], titles=df.columns.values)
 
-
-@app.route("/ebay")
-def ebay():
-
-    arg = 'search'
-    argValue = 'Nintendo Switch Console'
-
+def scrape_ebay(search):
     request = requests.get(
-        'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=True&crawl_args=%7B%22' + arg + '%22%3A%20' + argValue + '%7D').json()
-    df = pd.DataFrame(request['items'])
-
-    return render_template('table.html',  tables=[df.to_html(index=False)], titles=df.columns.values)
+        'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D').json()
+    return pd.DataFrame(request['items'])
 
 
 def scarpe_craigslist(search):
