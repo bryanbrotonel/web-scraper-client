@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from urllib.parse import quote
 import requests
 import pandas as pd
+import sys
 
 app = Flask(__name__)
 
@@ -30,20 +31,32 @@ def results():
     return render_template('table.html',  tables=[df.to_html(index=False)], titles=df.columns.values)
 
 def scrape_ebay(search):
-    request = requests.get(
-        'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D').json()
+    ebayLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
+
+    print(ebayLink, file=sys.stderr)
+    print(ebayLink, file=sys.stdout)
+
+    request = requests.get(ebayLink).json()
     return pd.DataFrame(request['items'])
 
 
 def scarpe_craigslist(search):
-    request = requests.get(
-        'https://webscraper-server.herokuapp.com/crawl.json?spider_name=craigslist&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D').json()
+    craigslistLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=craigslist&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
+
+    print(craigslistLink, file=sys.stderr)
+    print(craigslistLink, file=sys.stdout)
+
+    request = requests.get(craigslistLink).json()
     return pd.DataFrame(request['items'])
 
 
 def scrape_amazon(search):
-    request = requests.get(
-        'https://webscraper-server.herokuapp.com/crawl.json?spider_name=amazon&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D').json()
+    amazonLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=amazon&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
+
+    print(amazonLink, file=sys.stderr)
+    print(amazonLink, file=sys.stdout)
+
+    request = requests.get(amazonLink).json()
     return pd.DataFrame(request['items'])
 
 
