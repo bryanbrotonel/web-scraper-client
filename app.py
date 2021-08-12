@@ -22,11 +22,11 @@ def results():
 
     searchArgs = quote(search)
 
-    # dfCraigslist = scarpe_craigslist(searchArgs)
-    # dfAmazon = scrape_amazon(searchArgs)
-    # dfEbay = scrape_ebay(searchArgs)
+    dfCraigslist = scarpe_craigslist(searchArgs)
+    dfAmazon = scrape_amazon(searchArgs)
+    dfEbay = scrape_ebay(searchArgs)
 
-    df = scarpe_craigslist(searchArgs).append(scrape_amazon(searchArgs)).append(scrape_ebay(searchArgs))
+    df = dfCraigslist.append(dfAmazon).append(dfEbay)
 
     return render_template('table.html',  tables=[df.to_html(index=False)], titles=df.columns.values)
 
