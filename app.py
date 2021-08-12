@@ -33,21 +33,47 @@ def results():
 def scrape_ebay(search):
     ebayLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
 
-    request = requests.get(ebayLink).json()
+    for i in range(3):
+        attempts = i
+        while True :
+            try:
+                request = requests.get(ebayLink).json()
+            except requests.exceptions.Timeout:
+                attempts-=1
+                continue
+            break
     return pd.DataFrame(request['items'])
 
 
 def scarpe_craigslist(search):
     craigslistLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=craigslist&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
 
-    request = requests.get(craigslistLink).json()
+    for i in range(3):
+        attempts = i
+        while True :
+            try:
+                request = requests.get(craigslistLink).json()
+            except requests.exceptions.Timeout:
+                attempts-=1
+                continue
+            break
+
     return pd.DataFrame(request['items'])
 
 
 def scrape_amazon(search):
     amazonLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=amazon&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
 
-    request = requests.get(amazonLink).json()
+    for i in range(3):
+        attempts = i
+        while True :
+            try:
+                request = requests.get(amazonLink).json()
+            except requests.exceptions.Timeout:
+                attempts-=1
+                continue
+            break
+
     return pd.DataFrame(request['items'])
 
 
