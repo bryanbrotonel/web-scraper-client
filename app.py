@@ -33,22 +33,46 @@ def results():
 def scrape_ebay(search):
     ebayLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=ebay&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
 
-    request = requests.get(ebayLink).json()
-    return pd.DataFrame(request['items'])
+    request = None
+    while request is None:
+        try:
+            request = requests.get(ebayLink)
+        except requests.exceptions.Timeout:
+            continue
+
+    data = request.json()
+
+    return pd.DataFrame(data['items'])
 
 
 def scarpe_craigslist(search):
     craigslistLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=craigslist&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
 
-    request = requests.get(craigslistLink).json()
-    return pd.DataFrame(request['items'])
+    request = None
+    while request is None:
+        try:
+            request = requests.get(craigslistLink)
+        except requests.exceptions.Timeout:
+            continue
+
+    data = request.json()
+
+    return pd.DataFrame(data['items'])
 
 
 def scrape_amazon(search):
     amazonLink = 'https://webscraper-server.herokuapp.com/crawl.json?spider_name=amazon&start_requests=true&crawl_args=%7B%22search%22%3A%20%22' + search + '%22%7D'
 
-    request = requests.get(amazonLink).json()
-    return pd.DataFrame(request['items'])
+    request = None
+    while request is None:
+        try:
+            request = requests.get(amazonLink)
+        except requests.exceptions.Timeout:
+            continue
+
+    data = request.json()
+
+    return pd.DataFrame(data['items'])
 
 
 if __name__ == "__main__":
