@@ -24,7 +24,7 @@ def results():
 
     websites = ['amazon', 'ebay', 'craigslist']
 
-    pool = multiprocessing.Pool(processes=3)
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     results = pool.map(partial(scrape_data, search=searchArgs), websites)
 
     return render_template('table.html',  tables=[df.append([data for data in results]).to_html(index=False)], titles=df.columns.values)
