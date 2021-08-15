@@ -20,7 +20,7 @@ def results():
     search = request.form['search']
     searchArgs = quote(search)
 
-    websites = ['craigslist', 'ebay']
+    websites = ['craigslist', 'ebay', 'amazon']
     items = []
 
     pool = multiprocessing.Pool(processes=3)
