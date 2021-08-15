@@ -1,21 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
 
     <title>{% block title %}{% endblock %} Scraped Data</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/main.js') }}"
+    ></script>
+
     {% endblock %}
-</head>
+  </head>
 
-<body>
-    <h1>Scraped Data</h1>
-    <div class=page>
-        {% for table in tables %}
-        {{ table|safe }}
-        {% endfor %}
+  <body>
+    <div class="header position-relative">
+      <span>StoreUp</span>
     </div>
-</body>
-
+    <div>
+      <div class="container">
+        <div class="result-search mt-5">
+          <form class="input-group" method="post">
+            <input type="search" name="search" class="form-control" value="{{search}}" />
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card mt-5 mb-5 p-4 d-md-none">
+          {% for item in data %}
+          <div class="row mb-5">
+            <div class="col">
+              <img
+                src="{{ item['Product Image'] }}"
+                alt="{{ item['Product Name'] }}"
+                class="img-thumbnail rounded product-image"
+              />
+            </div>
+            <div class="col">
+              <div>
+                <h6>{{ item['Product Name'] }}</h6>
+              </div>
+              <div>
+                <p>{{ item['Product Author'] }}</p>
+              </div>
+              <div>
+                <p>{{ item['Product Price'] }}</p>
+              </div>
+              <div>
+                <a href="{{ item['Product Link'] }}" target="_blank">Details</a>
+              </div>
+            </div>
+          </div>
+          <hr />
+          {% endfor %}
+        </div>
+        <div class="card mt-5 mb-5 p-4 d-none d-md-block">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Retailer</th>
+                <th>Price</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in data %}
+              <tr class="mb-5">
+                <td class="col-md-2">
+                  <img
+                    src="{{ item['Product Image'] }}"
+                    alt="{{ item['Product Name'] }}"
+                    class="img-thumbnail rounded product-image"
+                  />
+                </td>
+                <td class="col">{{ item['Product Name'] }}</td>
+                <td class="col">{{ item['Product Author'] }}</td>
+                <td class="col">{{ item['Product Price'] }}</td>
+                <td class="col">
+                  <a href="{{ item['Product Link'] }}" target="_blank"
+                    >Details</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
